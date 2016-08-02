@@ -107,6 +107,9 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="Schema\SimplePDL.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="SimpleViewer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +124,8 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="Test Files\SimplePDL-Test1.xml" />
+    <Content Include="Test Files\SimplePDL-Test2.xml" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified"
+           xmlns="http://schemas.foobar.com/SimplePDL/1.0/" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           targetNamespace="http://schemas.foobar.com/SimplePDL/1.0/">
+  <!-- Simple Types-->
+  <xs:simpleType name="stMatrix">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse" />
+      <xs:pattern value="((\-|\+)?(([0-9]+(\.[0-9]+)?)|(\.[0-9]+))((e|E)(\-|\+)?[0-9]+)?)( ?, ?)((\-|\+)?(([0-9]+(\.[0-9]+)?)|(\.[0-9]+))((e|E)(\-|\+)?[0-9]+)?)( ?, ?)((\-|\+)?(([0-9]+(\.[0-9]+)?)|(\.[0-9]+))((e|E)(\-|\+)?[0-9]+)?)( ?, ?)((\-|\+)?(([0-9]+(\.[0-9]+)?)|(\.[0-9]+))((e|E)(\-|\+)?[0-9]+)?)( ?, ?)((\-|\+)?(([0-9]+(\.[0-9]+)?)|(\.[0-9]+))((e|E)(\-|\+)?[0-9]+)?)( ?, ?)((\-|\+)?(([0-9]+(\.[0-9]+)?)|(\.[0-9]+))((e|E)(\-|\+)?[0-9]+)?)" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="stPoint">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse" />
+      <xs:pattern value="((\-|\+)?(([0-9]+(\.[0-9]+)?)|(\.[0-9]+))((e|E)(\-|\+)?[0-9]+)?)( ?, ?)((\-|\+)?(([0-9]+(\.[0-9]+)?)|(\.[0-9]+))((e|E)(\-|\+)?[0-9]+)?)" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="stPoints-2">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="((\-|\+)?(([0-9]+(\.[0-9]+)?)|(\.[0-9]+))((e|E)(\-|\+)?[0-9]+)?)( ?, ?)((\-|\+)?(([0-9]+(\.[0-9]+)?)|(\.[0-9]+))((e|E)(\-|\+)?[0-9]+)?)( ?, ?)((\-|\+)?(([0-9]+(\.[0-9]+)?)|(\.[0-9]+))((e|E)(\-|\+)?[0-9]+)?)( ?, ?)((\-|\+)?(([0-9]+(\.[0-9]+)?)|(\.[0-9]+))((e|E)(\-|\+)?[0-9]+)?)"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="stColor">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse" />
+      <xs:pattern value="(#([0-9a-fA-F]{2})?[0-9a-fA-F]{6})"/>
+    </xs:restriction>    
+  </xs:simpleType>
+  <xs:simpleType name="stDouble">
+    <xs:restriction base="xs:double">
+      <xs:whiteSpace value="collapse"/>
+      <xs:pattern value="((\-|\+)?(([0-9]+(\.[0-9]+)?)|(\.[0-9]+))((e|E)(\-|\+)?[0-9]+)?)" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="stZeroOne">
+    <xs:restriction base="stDouble">
+      <xs:minInclusive value="0.0"/>
+      <xs:maxInclusive value="1.0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Complex Types -->
+  <xs:complexType name="ctCircle">
+    <xs:attribute name="Transform" type="stMatrix" />
+    <xs:attribute name="Opacity" type="stZeroOne" />
+    <xs:attribute name="Center" type="stPoint" use="required"/>
+    <xs:attribute name="Radius" type="stDouble" use="required" />
+    <xs:attribute name="Fill" type="stColor" />
+    <xs:attribute name="Stroke" type="stColor" />
+    <xs:attribute name="StrokeWidth" type="stDouble" />
+  </xs:complexType>
+  <xs:complexType name="ctRectangle">
+    <xs:attribute name="Transform" type="stMatrix" />
+    <xs:attribute name="Opacity" type="stZeroOne" />
+    <xs:attribute name="Points" type="stPoints-2" use="required"/>
+    <xs:attribute name="Fill" type="stColor" />
+    <xs:attribute name="Stroke" type="stColor" />
+    <xs:attribute name="StrokeWidth" type="stDouble" />
+  </xs:complexType>
+  <xs:complexType name="ctLine">
+    <xs:attribute name="Transform" type="stMatrix" />
+    <xs:attribute name="Opacity" type="stZeroOne" />
+    <xs:attribute name="Points" type="stPoints-2" use="required" />
+    <xs:attribute name="Color" type="stColor" />
+    <xs:attribute name="Width" type="stDouble" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="ctText">
+    <xs:attribute name="Transform" type="stMatrix" />
+    <xs:attribute name="Opacity" type="stZeroOne" />
+    <xs:attribute name="Origin" type="stPoint" use="required" />
+    <xs:attribute name="Font" type="xs:string" use="required"/>
+    <xs:attribute name="Size" type="stDouble" use ="required"/>
+    <xs:attribute name="Color" type="stColor" />
+    <xs:attribute name="String" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="ctCanvas">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Rectangle" type="ctRectangle"/>
+        <xs:element name="Line" type="ctLine"/>
+        <xs:element name="Text" type="ctText"/>
+        <xs:element name="Circle" type="ctCircle"/>
+        <xs:element name="Canvas" type="ctCanvas"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="Transform" type="stMatrix" />
+    <xs:attribute name="Opacity" type="stZeroOne" />
+  </xs:complexType>
+  <!-- Root Elements -->
+  <xs:element name="Page">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="Rectangle" type="ctRectangle"/>
+          <xs:element name="Line" type="ctLine"/>
+          <xs:element name="Text" type="ctText"/>
+          <xs:element name="Circle" type="ctCircle"/>
+          <xs:element name="Canvas" type="ctCanvas"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="Dimensions" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

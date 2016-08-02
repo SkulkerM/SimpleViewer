@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://schemas.foobar.com/SimplePDL/1.0/"
+      Dimensions="1000,1000">
+  <Rectangle Transform="5.0,0,0,5.0,25.0,50" Opacity="0.5" Points="20,20,50,50" Fill="#FF0000" Stroke="#000000" StrokeWidth="2"/>
+  <Circle Transform="1.0,0,0,1.0,0,0" Opacity="0.35" Center="100,100" Radius="200" Fill="#0000FF" Stroke="#000000" StrokeWidth="4"/>
+  <Line Opacity="1.0" Points="300,300,350,450" Color="#00FF00" Width="27"/>
+  <Text Transform="0.0,1,-1,0,400,0" Opacity="1.0" Origin="200,200" Font="Cooper" Size="72" String="Hello World!" Color="#91A44F"/>
+  <Text Transform="0.7,0.7,-0.7,0.7,230,-110" Opacity="1.0" Origin="200,200" Font="Cooper" Size="72" String="Hello World!" Color="#91A44F"/>
+  <Circle Opacity="0.85" Center="500,500" Radius="200" Fill="#FF00FF" Stroke="#000000" StrokeWidth="28"/>
+</Page>
